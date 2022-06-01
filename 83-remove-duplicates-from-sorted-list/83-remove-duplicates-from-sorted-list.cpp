@@ -21,9 +21,11 @@ public:
             dupfreq[ptr->val]++;
             if(dupfreq[ptr->val] > 1)
             {
+                ListNode* temp = ptr;
                 prev->next = ptr->next; 
                 dupfreq[ptr->val]--;
                 ptr = ptr->next;
+                delete temp;
                
             }
             else{
