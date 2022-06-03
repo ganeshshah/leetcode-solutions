@@ -12,6 +12,9 @@ public:
             break;
         }
         
+        if(ansrow == -1)
+            return false;
+        
         for(int i = 0; i<n;i++)
         {
             if(target == matrix[ansrow][i])
