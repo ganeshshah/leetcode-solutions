@@ -8,10 +8,10 @@ class Solution {
         int shifts = 0;
         int n = s.length();
         
-        for (var pair : shift)
-        	shifts += pair[0] == 0 ? pair[1] : -pair[1];
-        shifts %= n;
+        for(int i=0;i<shift.length;i++)
+            shifts += shift[i][0] == 0 ? shift[i][1] : -shift[i][1];
         
+        shifts%=n;
        if (shifts == 0)
 		return s;
 		
