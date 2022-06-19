@@ -5,32 +5,32 @@ class Solution {
     
     public String stringShift(String s, int[][] shift) {
         
-//         int shifts = 0;
-//         int n = s.length();
+        int shifts = 0;
+        int n = s.length();
         
-//         for(int i=0;i<shift.length;i++)
-//             shifts += shift[i][0] == 0 ? -shift[i][0] : shift[i][1];
+        for (var pair : shift)
+        	shifts += pair[0] == 0 ? pair[1] : -pair[1];
+        shifts %= n;
         
-        
-//        if (shifts == 0)
-// 		return s;
-		
-// 	return shifts < 0 ? s.substring(n + shifts) + s.substring(0, n + shifts) : 
-// 		   s.substring(shifts) + s.substring(0, shifts);
-        
-        
-    var shifts = 0;
-	for (var pair : shift)
-		shifts += pair[0] == 0 ? pair[1] : -pair[1];
-	var n = s.length();
-	shifts %= n;
-
-	if (shifts == 0)
+       if (shifts == 0)
 		return s;
 		
-	return shifts < 0 ?
-		   s.substring(n + shifts) + s.substring(0, n + shifts) : 
+	   return shifts < 0 ? s.substring(n + shifts) + s.substring(0, n + shifts) : 
 		   s.substring(shifts) + s.substring(0, shifts);
+        
+        
+//     var shifts = 0;
+// 	for (var pair : shift)
+// 		shifts += pair[0] == 0 ? pair[1] : -pair[1];
+// 	var n = s.length();
+// 	shifts %= n;
+
+// 	if (shifts == 0)
+// 		return s;
+		
+// 	return shifts < 0 ?
+// 		   s.substring(n + shifts) + s.substring(0, n + shifts) : 
+// 		   s.substring(shifts) + s.substring(0, shifts);
        
     }
 }
