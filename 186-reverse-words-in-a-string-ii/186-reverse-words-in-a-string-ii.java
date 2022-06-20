@@ -9,9 +9,10 @@ class Solution {
     }
     
     public void reverseWords(char[] s) {
-        int i=0,j=s.length;
+        int i=0,j=s.length-1;
          reverse(s,0,s.length-1);
-        int n = s.length;
+        
+       int n = s.length;
         int start = 0, end = 0;
 
         while (start < n) {
