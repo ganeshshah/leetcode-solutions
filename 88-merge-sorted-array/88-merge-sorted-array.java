@@ -8,16 +8,18 @@ class Solution {
                int temp = nums1[i];
                nums1[i] = nums2[0];
                nums2[0] = temp;
-              
-           }
-             int j=1;
-             while(j<n && nums2[j]<nums2[j-1])
+               
+               int j=1;
+               while(j<n && nums2[j]<nums2[j-1])
                {
                int temp2 = nums2[j];
                nums2[j] = nums2[j-1];
                nums2[j-1] = temp2;
                 j++;
                }
+              
+           }
+          
                
         }
         
