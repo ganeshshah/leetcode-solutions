@@ -17,6 +17,7 @@ class Solution {
                nums2[j-1] = temp2;
                 j++;
                }  
+               //
            }     
         }
         
