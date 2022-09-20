@@ -3,33 +3,25 @@ class Solution {
         
         int m = matrix.length;
         int n = matrix[0].length;
+        int row[] = new int[m];
+        int col[] = new int[n];
+        Arrays.fill(row, -1);
+        Arrays.fill(col, -1);
         
         for(int i=0;i<m;i++)
             for(int j=0;j<n;j++)
             {
-                if(matrix[i][j] == 0)
+                if(matrix[i][j]==0)
                 {
-                    int x=0,y=0;
-                    while(x<m)
-                    {
-                        if(matrix[x][j]!=0)
-                            matrix[x][j]=-123213;
-                        x++;
-        
-                    }
-                    while(y<n)
-                    {
-                        if( matrix[i][y]!=0)
-                            matrix[i][y]=-123213; 
-                        y++;
-                    }
+                    row[i]=0;
+                    col[j]=0;
                 }
             }
         
         for(int i=0;i<m;i++)
             for(int j=0;j<n;j++)
             {
-                if(matrix[i][j] == -123213)
+                if(row[i]==0 || col[j]==0)
                     matrix[i][j]=0;
             }
         
