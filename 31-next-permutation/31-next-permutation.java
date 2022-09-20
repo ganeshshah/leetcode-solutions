@@ -37,6 +37,7 @@ class Solution {
             }
             swap(nums,ind,next_ind);
             reverse(nums,ind+1,nums.length);
+            
         }
         
     }
