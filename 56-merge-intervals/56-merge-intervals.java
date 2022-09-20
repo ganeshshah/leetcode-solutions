@@ -20,6 +20,7 @@ class Solution {
         mI.put(left,right);
         
         int[][] result = new int[mI.size()][2];
+    
         
         int i =0;
         for (Map.Entry<Integer, Integer> entry : mI.entrySet()) {
