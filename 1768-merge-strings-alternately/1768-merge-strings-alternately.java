@@ -10,7 +10,6 @@ class Solution {
            
             if(i<w2_length){
                  s = s + word1.charAt(i) + word2.charAt(j++);
-              
             }else
                 break;
         }
