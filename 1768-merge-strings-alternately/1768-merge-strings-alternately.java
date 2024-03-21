@@ -9,8 +9,8 @@ class Solution {
         for(i=0;i<w1_length;i++){
            
             if(i<w2_length){
-                 s = s + word1.charAt(i);
-                 s += word2.charAt(j++);
+                 s = s + word1.charAt(i) + word2.charAt(j++);
+              
             }else
                 break;
         }
