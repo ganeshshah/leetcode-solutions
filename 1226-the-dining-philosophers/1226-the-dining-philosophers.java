@@ -15,7 +15,7 @@ class DiningPhilosophers {
                            Runnable putLeftFork,
                            Runnable putRightFork) throws InterruptedException {
 
-			if (philosopher % 2 == 1) {
+		
 				synchronized (leftFork) {
 					synchronized (rightFork) {
 						pickLeftFork.run();
@@ -25,17 +25,17 @@ class DiningPhilosophers {
 						putLeftFork.run();
 					}
 				}
-			} else {
-				synchronized (leftFork) {
-					synchronized (rightFork) {
-						pickRightFork.run();
-						pickLeftFork.run();
-						eat.run();
-						putLeftFork.run();
-						putRightFork.run();
-					}
-				}
-			}
+			// else {
+			// 	synchronized (leftFork) {
+			// 		synchronized (rightFork) {
+			// 			pickRightFork.run();
+			// 			pickLeftFork.run();
+			// 			eat.run();
+			// 			putLeftFork.run();
+			// 			putRightFork.run();
+			// 		}
+			// 	}
+			// }
 
 
 
