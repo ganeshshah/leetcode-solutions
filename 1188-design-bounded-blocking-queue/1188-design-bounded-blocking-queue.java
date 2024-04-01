@@ -1,7 +1,7 @@
 class BoundedBlockingQueue {
     
     private Queue<Integer> blockingQueue;
-    private  final Integer queueSize;
+    private final Integer queueSize;
 
     public BoundedBlockingQueue(int capacity) {
         this.blockingQueue = new LinkedList<>();
