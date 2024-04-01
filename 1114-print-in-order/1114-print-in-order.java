@@ -16,10 +16,10 @@ class Foo {
         }
         
         // printFirst.run() outputs "first". Do not change or remove this line.
-        if(state.get() == 0){
+        
              printFirst.run();
             state.set(1);
-        }
+        
            
        
     }
@@ -31,10 +31,10 @@ class Foo {
         }
         
         // printSecond.run() outputs "second". Do not change or remove this line.
-        if(state.get() == 1){
+        
             printSecond.run();
             state.set(2);
-        }
+        
     }
 
     public  void third(Runnable printThird) throws InterruptedException {
@@ -42,10 +42,10 @@ class Foo {
             
         }
         
-         if(state.get() == 2){
+         
              printThird.run();
             state.set(0);
-        }
+        
         // printThird.run() outputs "third". Do not change or remove this line.
         
     }
