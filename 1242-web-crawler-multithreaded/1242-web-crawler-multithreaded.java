@@ -1,49 +1,61 @@
+/**
+ * // This is the HtmlParser's API interface.
+ * // You should not implement it, or speculate about its implementation
+ * interface HtmlParser {
+ *     public List<String> getUrls(String url) {}
+ * }
+ */
 class Solution {
     
-    private ExecutorService executor = Executors.newFixedThreadPool(6);
-   
-    private AtomicInteger activeTasks = new AtomicInteger();
+    private volatile Set<String> visited = Collections.synchronizedSet(new HashSet<>());
     
-    private HtmlParser htmlParser;
+    public List<String> crawl(String startUrl, HtmlParser htmlParser){
+        
+        ForkJoinPool pool = new ForkJoinPool(12);
+        visited.add(startUrl);
+        
+           Future<Void> combinedResult = pool.submit(new WebCrawlingTask(startUrl,htmlParser));  
+            while (!combinedResult.isDone());
+        
+        
     
-    private final Set<String> visited = Collections.synchronizedSet(new HashSet<>());
+        return(new ArrayList<>(visited));
+        
+    }
     
-    private String domain;
     
-    private class Task implements Runnable {
-        String url;
-        public Task(String url) {
-            this.url = url;
+    class WebCrawlingTask extends RecursiveAction {
+        
+        private String startUrl;
+        private HtmlParser htmlParser;
+        private ArrayList<WebCrawlingTask> allTask = new ArrayList<>();
+        
+        WebCrawlingTask(String startUrl,HtmlParser htmlParser){
+            this.startUrl = startUrl;
+            this.htmlParser = htmlParser;
         }
         
-        @Override
-        public void run() {
-            for(String link : htmlParser.getUrls(url)) {
-                if(link.split("/")[2].equals(domain) && visited.add(link)) {
-                    activeTasks.incrementAndGet();
-                    executor.execute(new Task(link));
-                }
+    @Override
+    protected void compute(){
+        
+        List<String> urls = htmlParser.getUrls(startUrl);
+        if( urls == null || urls.size() == 0)
+            return; 
+        
+        for(String url : urls){
+            if(getHostName(url).equals(getHostName(startUrl)) && visited.add(url)){
+             WebCrawlingTask subtask = new WebCrawlingTask(url,htmlParser);
+             allTask.add(subtask);
             }
-            activeTasks.decrementAndGet();
-        } 
-    }
-    
-    public List<String> crawl(String startUrl, HtmlParser htmlParser) {
+        }
+        
+        invokeAll(allTask);
+        
+      }
+        
+        private String getHostName(String url){
+            return url.split("/")[2];
+        }
          
-        this.htmlParser = htmlParser;
-        this.domain = startUrl.split("/")[2];
-        visited.add(startUrl);
-        activeTasks.set(1);
-        executor.execute(new Task(startUrl));
-        while(activeTasks.get() > 0) {
-           try {
-             Thread.sleep(80);
-           } catch (Exception e) {
-    
-           }    
-        }    
-        executor.shutdownNow();
-        return new ArrayList<>(visited);
     }
-    
 }
