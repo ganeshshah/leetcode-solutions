@@ -11,7 +11,7 @@ class Solution {
     
     public List<String> crawl(String startUrl, HtmlParser htmlParser){
         
-        ForkJoinPool pool = new ForkJoinPool(12);
+        ForkJoinPool pool = new ForkJoinPool(6);
         visited.add(startUrl);
         
            Future<Void> combinedResult = pool.submit(new WebCrawlingTask(startUrl,htmlParser));  
