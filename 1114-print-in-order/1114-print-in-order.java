@@ -12,22 +12,20 @@ class Foo {
     public void first(Runnable printFirst) throws InterruptedException {
         
         while(state.get() != 0){
-            
+            //wait();
         }
         
         // printFirst.run() outputs "first". Do not change or remove this line.
         
-             printFirst.run();
+            printFirst.run();
             state.set(1);
-        
            
-       
     }
 
     public void second(Runnable printSecond) throws InterruptedException {
         
         while(state.get() != 1){
-            
+           // wait();
         }
         
         // printSecond.run() outputs "second". Do not change or remove this line.
@@ -39,11 +37,9 @@ class Foo {
 
     public  void third(Runnable printThird) throws InterruptedException {
          while(state.get() !=2){
-            
+           // wait();
         }
-        
-         
-             printThird.run();
+            printThird.run();
             state.set(0);
         
         // printThird.run() outputs "third". Do not change or remove this line.
