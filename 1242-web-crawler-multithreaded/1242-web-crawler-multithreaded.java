@@ -19,7 +19,7 @@ class Solution {
         this.htmlParser = htmlParser;
         currentlyActiveTasks.incrementAndGet();
         visited.add(startUrl);
-        executor.execute(new CrawlingTask(startUrl));
+        executor.submit(new CrawlingTask(startUrl));
         
         while(currentlyActiveTasks.get() > 0){
             try{
@@ -49,7 +49,7 @@ class Solution {
             for(String link : htmlParser.getUrls(url)){
                 if(getHostName(link).equals(hostname) && visited.add(link)){
                     currentlyActiveTasks.incrementAndGet();
-                    executor.execute(new CrawlingTask(link));
+                    executor.submit(new CrawlingTask(link));
                 }
             }
             
