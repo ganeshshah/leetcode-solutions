@@ -9,13 +9,13 @@
 
             Future<Void> combinedResult = pool.submit(new WebCrawlingTask(startUrl,htmlParser));
             
-            try{
-             combinedResult.get();   
-            }catch(Exception e){
+//             try{
+//              combinedResult.get();   
+//             }catch(Exception e){
                 
-            }
+//             }
             
-            //while (!combinedResult.isDone());
+            while (!combinedResult.isDone());
 
             return(new ArrayList<>(visited));
 
