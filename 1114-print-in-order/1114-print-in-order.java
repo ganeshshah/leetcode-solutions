@@ -9,38 +9,41 @@ class Foo {
         
     }
 
-    public void first(Runnable printFirst) throws InterruptedException {
+    public synchronized void first(Runnable printFirst) throws InterruptedException {
         
         while(state.get() != 0){
-            //wait();
+            wait();
         }
         
         // printFirst.run() outputs "first". Do not change or remove this line.
         
             printFirst.run();
             state.set(1);
+            notifyAll();
            
     }
 
-    public void second(Runnable printSecond) throws InterruptedException {
+    public synchronized void second(Runnable printSecond) throws InterruptedException {
         
         while(state.get() != 1){
-           // wait();
+            wait();
         }
         
         // printSecond.run() outputs "second". Do not change or remove this line.
         
             printSecond.run();
             state.set(2);
+            notifyAll();
         
     }
 
-    public  void third(Runnable printThird) throws InterruptedException {
+    public synchronized void third(Runnable printThird) throws InterruptedException {
          while(state.get() !=2){
-           // wait();
+            wait();
         }
             printThird.run();
             state.set(0);
+            notifyAll();
         
         // printThird.run() outputs "third". Do not change or remove this line.
         
