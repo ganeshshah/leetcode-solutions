@@ -7,24 +7,59 @@
  */
 class Solution {
     
-    private Set<String> result = new HashSet<>();
+    private Set<String> visited = Collections.synchronizedSet(new HashSet<String>());
+    private ExecutorService executor =  Executors.newFixedThreadPool(6);
+    private HtmlParser htmlParser;
+    private String hostname;
+    private AtomicInteger currentlyActiveTasks = new AtomicInteger(0);
     
     public List<String> crawl(String startUrl, HtmlParser htmlParser) {
         
-        result.add(startUrl);
-        String hostName = getHostName(startUrl);
-        recursivelyCrawl(startUrl,htmlParser,hostName);
-        return new ArrayList<>(result);
+        this.hostname = startUrl.split("/")[2];
+        this.htmlParser = htmlParser;
+        currentlyActiveTasks.incrementAndGet();
+        visited.add(startUrl);
+        executor.execute(new CrawlingTask(startUrl));
         
+        while(currentlyActiveTasks.get() > 0){
+            try{
+                Thread.sleep(80);
+            }catch(InterruptedException e){
+                //
+            }
+        }
+        
+        executor.shutdown();
+        
+        return new ArrayList<>(visited);
+            
     }
     
-    void recursivelyCrawl(String startUrl, HtmlParser htmlParser, String hostName){ 
-        result.add(startUrl);
-        htmlParser.getUrls(startUrl).parallelStream().filter( url -> !result.contains(url) && getHostName(url).equals(hostName))
-            .forEach(url -> recursivelyCrawl(url,htmlParser,hostName));
-    }
-    
-    private String getHostName(String url){
-        return url.split("/")[2];
+    public class CrawlingTask implements Runnable {
+        
+        private String url;
+        
+        CrawlingTask(String url){
+            this.url = url;
+        }
+        
+        @Override
+       public void run(){
+            
+            for(String link : htmlParser.getUrls(url)){
+                if(getHostName(link).equals(hostname) && visited.add(link)){
+                    currentlyActiveTasks.incrementAndGet();
+                    executor.execute(new CrawlingTask(link));
+                }
+            }
+            
+            currentlyActiveTasks.decrementAndGet();
+            
+        }
+        
+        private String getHostName(String link){
+            return link.split("/")[2];
+        }
+        
     }
 }
