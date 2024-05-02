@@ -24,8 +24,7 @@ class Solution {
         if(resultArray[n] != -1)
             return resultArray[n];
         
-        resultArray[n] = helper(n-1) + helper(n-2) + helper(n-3);
+       return resultArray[n] = helper(n-1) + helper(n-2) + helper(n-3);
         
-        return resultArray[n];
     }
 }
