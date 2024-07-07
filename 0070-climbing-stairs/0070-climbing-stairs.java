@@ -1,10 +1,10 @@
 class Solution {
 
-    private static int ways;
+    private int ways = 0;
     private static int[] memo;
 
     public int climbStairs(int n) {
-        ways = 0;  // Reset static variable
+        //ways = 0;  // Reset static variable
         memo = new int[n + 1];  // Initialize memoization array
         for (int i = 0; i <= n; i++) {
             memo[i] = -1;  // Fill the memoization array with -1 to indicate uncomputed values
