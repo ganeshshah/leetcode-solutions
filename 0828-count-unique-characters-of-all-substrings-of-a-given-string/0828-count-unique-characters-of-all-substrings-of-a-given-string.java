@@ -1,32 +1,31 @@
 class Solution {
    public static int uniqueLetterString(String s) {
         int n = s.length();
-        int[] lastPos = new int[26];
-        int[] contribution = new int[26];
-        int totalUniqueCharsSum = 0;
-        int currentUniqueCharsSum = 0;
+        int[] lastSeen = new int[256];
+        int[] contribution = new int[256];
+        Map<Integer, Integer> indexMap = new HashMap<>();
 
-        // Initialize the lastPos array with -1
-        for (int i = 0; i < 26; i++) {
-            lastPos[i] = -1;
-        }
+        int result = 0;
+        int currentContribution = 0;
 
-        // Traverse the string
         for (int i = 0; i < n; i++) {
-            int charIndex = s.charAt(i) - 'A';
+            char c = s.charAt(i);
+            int idx = c;
 
-            // Calculate new contribution for current character
-            currentUniqueCharsSum -= contribution[charIndex];
-            contribution[charIndex] = i - lastPos[charIndex];
-            currentUniqueCharsSum += contribution[charIndex];
+            if (indexMap.containsKey(idx)) {
+                int previousIndex = indexMap.get(idx);
+                currentContribution -= contribution[idx];
+                contribution[idx] = i - previousIndex;
+            } else {
+                contribution[idx] = i + 1;
+            }
 
-            // Update the last seen position of the current character
-            lastPos[charIndex] = i;
+            currentContribution += contribution[idx];
+            indexMap.put(idx, i);
 
-            // Add the current sum of unique characters to the total sum
-            totalUniqueCharsSum += currentUniqueCharsSum;
+            result += currentContribution;
         }
 
-        return totalUniqueCharsSum;
+        return result;
     }
 }
